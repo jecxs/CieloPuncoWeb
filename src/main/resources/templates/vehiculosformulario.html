@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Vehículo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .form-container {
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-top: 50px;
+        }
+        .form-title {
+            color: #007bff;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+        .form-control, .select2-container--default .select2-selection--single {
+            border-radius: 10px;
+        }
+        .btn-submit {
+            background-color: #28a745;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .btn-submit:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .btn-cancel {
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-weight: bold;
+        }
+        .navbar {
+            background: linear-gradient(90deg, #1a4f2d 0%, #38771b 100%);
+            padding: 0.5rem 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1000;
+        }
+
+        .navbar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('path/to/your/texture.png');
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .navbar-brand {
+            color: #ffffff !important;
+            font-weight: 700;
+            font-size: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            transition: 0.3s;
+        }
+
+        .navbar-brand:hover {
+            transform: scale(1.05);
+        }
+
+        .navbar-brand i {
+            font-size: 2rem;
+            margin-right: 0.5rem;
+        }
+
+        .nav-link {
+            color: #ffffff !important;
+            font-weight: 500;
+            transition: 0.3s;
+            position: relative;
+            padding: 0.5rem 1rem;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background-color: #ffffff;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover::before {
+            left: 0;
+        }
+
+        .nav-link i {
+            margin-right: 0.5rem;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover i {
+            transform: rotate(360deg);
+        }
+
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .dropdown-item {
+            padding: 0.5rem 1.5rem;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .dropdown-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 3px;
+            background-color: #24b4c4;
+            transform: scaleY(0);
+            transition: 0.3s;
+        }
+
+        .dropdown-item:hover::before {
+            transform: scaleY(1);
+        }
+
+        .dropdown-item:hover {
+            background-color: #f8f9fa;
+            padding-left: 2rem;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            color: #ffffff;
+            background: rgba(255,255,255,0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .user-profile:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-3px);
+        }
+
+        .admin-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            border: 2px solid rgba(255,255,255,0.2);
+            transition: 0.3s;
+        }
+
+        .user-profile:hover .admin-avatar {
+            transform: rotate(360deg);
+        }
+
+        @media (max-width: 992px) {
+            .navbar-nav {
+                margin-top: 1rem;
+            }
+
+            .user-profile {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+        }
+
+        .mega-menu-content {
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .mega-menu-content h4 {
+            color: #073041;
+            margin-bottom: 0.5rem;
+        }
+
+        .mega-menu-content ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .mega-menu-content ul li {
+            margin-bottom: 0.25rem;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #24b4c4;
+            color: #ffffff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <i class="fas fa-bus-alt"></i>
+            <span>Panel de Control</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" th:href="@{/}">
+                        <i class="fas fa-home"></i>
+                        <span>INICIO</span>
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="passengerDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-users"></i>
+                        <span>Pasajeros</span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="passengerDropdown">
+                        <li><a class="dropdown-item" th:href="@{/new}"><i class="fas fa-plus-circle"></i> Registro</a></li>
+                        <li><a class="dropdown-item" th:href="@{/listar}"><i class="fas fa-list"></i> Listado</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="routesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-route"></i>
+                        <span>Rutas</span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="routesDropdown">
+                        <li><a class="dropdown-item" th:href="@{/rutas/new}"><i class="fas fa-plus-circle"></i> Registro</a></li>
+                        <li><a class="dropdown-item" th:href="@{/rutas/listar}"><i class="fas fa-list"></i> Listado</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="tripsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-bus"></i>
+                        <span>Viajes</span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="tripsDropdown">
+                        <li><a class="dropdown-item" th:href="@{/viajes/nuevo}"><i class="fas fa-plus-circle"></i> Registrar</a></li>
+                        <li><a class="dropdown-item" th:href="@{/viajes/listar}"><i class="fas fa-list"></i> Listar</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="carDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-car"></i>
+                        <span>Vehículos</span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="carDropdown">
+                        <li><a class="dropdown-item" th:href="@{/vehiculos/nuevo}"><i class="fas fa-plus-circle"></i> Registrar</a></li>
+                        <li><a class="dropdown-item" th:href="@{/vehiculos}"><i class="fas fa-list"></i> Listar</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="user-profile">
+                <img src="https://media-lim1-1.cdn.whatsapp.net/v/t61.24694-24/445116435_1913121035775230_5009887173409097431_n.jpg?ccb=11-4&oh=01_Q5AaIFwErS2-WAUcabDdq_mswj8cU08iXUFdcRacDL0aLL1L&oe=6694120D&_nc_sid=e6ed6c&_nc_cat=109" alt="Admin Avatar" class="admin-avatar">
+                <span>Administrador</span>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 form-container">
+            <h1 class="text-center form-title" th:text="${vehiculo.id} != null ? 'Editar Vehículo' : 'Registrar Nuevo Vehículo'">Registrar Nuevo Vehículo</h1>
+            <form th:action="@{${vehiculo.id} != null ? '/vehiculos/actualizar/' + ${vehiculo.id} : '/vehiculos/guardar'}" th:object="${vehiculo}" method="post" id="vehiculoForm">
+                <div class="mb-4">
+                    <label for="marca" class="form-label">
+                        <i class="fas fa-car"></i> Marca
+                    </label>
+                    <input type="text" id="marca" name="marca" class="form-control" th:field="*{marca}" required>
+                </div>
+                <div class="mb-4">
+                    <label for="modelo" class="form-label">
+                        <i class="fas fa-cogs"></i> Modelo
+                    </label>
+                    <input type="text" id="modelo" name="modelo" class="form-control" th:field="*{modelo}" required>
+                </div>
+                <div class="mb-4">
+                    <label for="matricula" class="form-label">
+                        <i class="fas fa-id-card"></i> Matrícula
+                    </label>
+                    <input type="text" id="matricula" name="matricula" class="form-control" th:field="*{matricula}">
+                </div>
+                <div class="mb-4">
+                    <label for="categoria" class="form-label">
+                        <i class="fas fa-tags"></i> Categoría
+                    </label>
+                    <select id="categoria" name="categoria" class="form-select" th:field="*{categoria}" required>
+                        <option value="" disabled>Seleccione una categoría</option>
+                        <option th:value="BUS" th:text="${#strings.capitalize('BUS')}">BUS</option>
+                        <option th:value="AUTO" th:text="${#strings.capitalize('AUTO')}">AUTO</option>
+                        <option th:value="CAMIONETA" th:text="${#strings.capitalize('CAMIONETA')}">CAMIONETA</option>
+                    </select>
+                </div>
+                <div class="text-center mt-5">
+                    <button type="submit" class="btn btn-submit me-2">
+                        <i class="fas fa-save"></i> Guardar
+                    </button>
+                    <a class="btn btn-secondary btn-cancel" th:href="@{/vehiculos}">
+                        <i class="fas fa-times"></i> Cancelar
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Inicializar Select2 para el campo de categoría
+        $('#categoria').select2({
+            theme: 'bootstrap-5',
+            width: '100%'
+        });
+
+        // Validación del formulario con jQuery Validate
+        $('#vehiculoForm').validate({
+            rules: {
+                marca: {
+                    required: true,
+                    minlength: 2
+                },
+                modelo: {
+                    required: true,
+                    minlength: 2
+                },
+                matricula: {
+                    required: true,
+                    minlength: 6,
+                    maxlength: 10
+                },
+                categoria: {
+                    required: true
+                }
+            },
+            messages: {
+                marca: {
+                    required: "Por favor, ingrese la marca del vehículo",
+                    minlength: "La marca debe tener al menos 2 caracteres"
+                },
+                modelo: {
+                    required: "Por favor, ingrese el modelo del vehículo",
+                    minlength: "El modelo debe tener al menos 2 caracteres"
+                },
+                matricula: {
+                    required: "Por favor, ingrese la matrícula del vehículo",
+                    minlength: "La matrícula debe tener al menos 6 caracteres",
+                    maxlength: "La matrícula no puede tener más de 10 caracteres"
+                },
+                categoria: {
+                    required: "Por favor, seleccione una categoría"
+                }
+            },
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.mb-4').append(error);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            },
+            submitHandler: function(form) {
+                $('.btn-submit').prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Guardando...');
+                form.submit();
+            }
+        });
+    });
+</script>
+</body>
+</html>

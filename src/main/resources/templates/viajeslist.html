@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista de Viajes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        :root {
+            --primary-color: #073041;
+            --secondary-color: #24b4c4;
+            --text-color: #ffffff;
+            --hover-color: #f8f9fa;
+            --transition-speed: 0.3s;
+        }
+
+        .navbar {
+            background: linear-gradient(90deg, #1a4f2d 0%, #38771b 100%);
+            padding: 0.5rem 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1000;
+        }
+
+        .navbar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('path/to/your/texture.png');
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .navbar-brand {
+            color: var(--text-color) !important;
+            font-weight: 700;
+            font-size: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            transition: var(--transition-speed);
+        }
+
+        .navbar-brand:hover {
+            transform: scale(1.05);
+        }
+
+        .navbar-brand i {
+            font-size: 2rem;
+            margin-right: 0.5rem;
+        }
+
+        .nav-link {
+            color: var(--text-color) !important;
+            font-weight: 500;
+            transition: var(--transition-speed);
+            position: relative;
+            padding: 0.5rem 1rem;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background-color: var(--text-color);
+            transition: var(--transition-speed);
+        }
+
+        .nav-link:hover::before {
+            left: 0;
+        }
+
+        .nav-link i {
+            margin-right: 0.5rem;
+            transition: var(--transition-speed);
+        }
+
+        .nav-link:hover i {
+            transform: rotate(360deg);
+        }
+
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .dropdown-item {
+            padding: 0.5rem 1.5rem;
+            transition: var(--transition-speed);
+            position: relative;
+        }
+
+        .dropdown-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 3px;
+            background-color: var(--secondary-color);
+            transform: scaleY(0);
+            transition: var(--transition-speed);
+        }
+
+        .dropdown-item:hover::before {
+            transform: scaleY(1);
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--hover-color);
+            padding-left: 2rem;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            color: var(--text-color);
+            background: rgba(255,255,255,0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            transition: var(--transition-speed);
+            cursor: pointer;
+        }
+
+        .user-profile:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-3px);
+        }
+
+        .admin-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            border: 2px solid rgba(255,255,255,0.2);
+            transition: var(--transition-speed);
+        }
+
+        .user-profile:hover .admin-avatar {
+            transform: rotate(360deg);
+        }
+
+        @media (max-width: 992px) {
+            .navbar-nav {
+                margin-top: 1rem;
+            }
+
+            .user-profile {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+        }
+        .mega-menu-content h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .mega-menu-content ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .mega-menu-content ul li {
+            margin-bottom: 0.25rem;
+        }
+        .container {
+            margin-top: 2rem;
+        }
+        .tablecc {
+            width: 100% !important;
+        }
+
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <i class="fas fa-bus-alt"></i>
+            <span>Panel de Control</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" th:href="@{/}">
+                        <i class="fas fa-home"></i>
+                        <span>INICIO</span>
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="passengerDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-users"></i>
+                        <span>Pasajeros</span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="passengerDropdown">
+                        <li><a class="dropdown-item" th:href="@{/new}"><i class="fas fa-plus-circle"></i> Registro</a></li>
+                        <li><a class="dropdown-item" th:href="@{/listar}"><i class="fas fa-list"></i> Listado</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="routesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-route"></i>
+                        <span>Rutas</span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="routesDropdown">
+                        <li><a class="dropdown-item" th:href="@{/rutas/new}"><i class="fas fa-plus-circle"></i> Registro</a></li>
+                        <li><a class="dropdown-item" th:href="@{/rutas/listar}"><i class="fas fa-list"></i> Listado</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="tripsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-bus"></i>
+                        <span>Viajes</span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="tripsDropdown">
+                        <li><a class="dropdown-item" th:href="@{/viajes/nuevo}"><i class="fas fa-plus-circle"></i> Registrar</a></li>
+                        <li><a class="dropdown-item" th:href="@{/viajes/listar}"><i class="fas fa-list"></i> Listar</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="carDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-car"></i>
+                        <span>Vehículos</span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="carDropdown">
+                        <li><a class="dropdown-item" th:href="@{/vehiculos/nuevo}"><i class="fas fa-plus-circle"></i> Registrar</a></li>
+                        <li><a class="dropdown-item" th:href="@{/vehiculos}"><i class="fas fa-list"></i> Listar</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="user-profile">
+                <img src="https://media-lim1-1.cdn.whatsapp.net/v/t61.24694-24/445116435_1913121035775230_5009887173409097431_n.jpg?ccb=11-4&oh=01_Q5AaIFwErS2-WAUcabDdq_mswj8cU08iXUFdcRacDL0aLL1L&oe=6694120D&_nc_sid=e6ed6c&_nc_cat=109" alt="Admin Avatar" class="admin-avatar">
+                <span>Administrador</span>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5 tablecc">
+    <h2 class="mb-4 text-primary">Lista de Viajes</h2>
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Viajes Registrados</h5>
+            <a th:href="@{/viajes/nuevo}" class="btn btn-light">
+                <i class="fas fa-plus-circle"></i> Nuevo Viaje
+            </a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped" id="viajesTable">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Ruta</th>
+                        <th>Pasajero</th>
+                        <th>Vehículo</th>
+                        <th>Fecha</th>
+                        <th>Precio</th>
+                        <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="viaje : ${viajes}">
+                        <td th:text="${viaje.id}"></td>
+                        <td th:text="${viaje.ruta.nombre}"></td>
+                        <td th:text="${viaje.pasajero.nombre + ' ' + viaje.pasajero.apellido}"></td>
+                        <td th:text="${viaje.vehiculo.categoria}"></td>
+                        <td th:text="${#temporals.format(viaje.fechaViaje, 'dd/MM/yyyy HH:mm')}"></td>
+                        <td th:text="${'S/ ' + #numbers.formatDecimal(viaje.precioTotal, 1, 2)}"></td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a th:href="@{/viajes/editar/{id}(id=${viaje.id})}" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Editar">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a th:href="@{/viajes/eliminar/{id}(id=${viaje.id})}" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Eliminar"
+                                   onclick="return confirm('¿Está seguro de que desea eliminar este viaje?');">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="d-flex justify-content-between align-items-center">
+                <span class="text-muted">Total de viajes: <span th:text="${viajes.size()}"></span></span>
+                <a href="/viajes/download-pdf" class="btn btn-outline-primary">
+                    <i class="fas fa-file-pdf"></i> Descargar PDF
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const navbar = document.querySelector('.navbar');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const dropdowns = document.querySelectorAll('.dropdown');
+
+        // Efecto de parallax en el navbar
+        window.addEventListener('scroll', function() {
+            let scrollPosition = window.pageYOffset;
+            navbar.style.transform = `translateY(${scrollPosition * 0.5}px)`;
+        });
+
+        // Efecto de resaltado en hover
+        navLinks.forEach(link => {
+            link.addEventListener('mouseover', function() {
+                this.style.textShadow = '0 0 10px rgba(255,255,255,0.8)';
+            });
+            link.addEventListener('mouseout', function() {
+                this.style.textShadow = 'none';
+            });
+        });
+
+
+
+        // Animación de notificaciones
+        const userProfile = document.querySelector('.user-profile');
+        userProfile.addEventListener('click', function() {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = 'Nueva notificación';
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.opacity = '1';
+                notification.style.transform = 'translateY(0)';
+            }, 100);
+
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateY(-20px)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        });
+    });
+</script>
+</body>
+</html>

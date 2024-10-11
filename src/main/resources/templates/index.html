@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AmazoniaExpress - Transporte en la Selva</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --color-primary: #006400;
+            --color-secondary: #228B22;
+            --color-accent: #FFD700;
+            --color-text: #333;
+            --color-background: #F0FFF0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--color-background);
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            background-color: var(--color-primary);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .nav-list {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-left: 2rem;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--color-accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            background-image: url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--color-accent);
+            color: var(--color-primary);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--color-secondary);
+            color: white;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 5rem 0;
+            background-color: #F0FFF0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--color-primary);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .service-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .service-content {
+            padding: 1.5rem;
+        }
+
+        .service-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--color-primary);
+        }
+
+        .service-description {
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Features Section */
+        .features {
+            background-color: var(--color-primary);
+            color: white;
+            padding: 5rem 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-item {
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--color-accent);
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 5rem 0;
+            background-color: #F0FFF0;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--color-primary);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--color-primary);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-link {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--color-accent);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-icon {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-icon:hover {
+            color: var(--color-accent);
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 2rem;
+            }
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 10px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-title {
+            color: var(--color-primary);
+            margin-bottom: 20px;
+        }
+
+        .modal-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            text-align: center;
+            background-color: var(--color-primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .modal-btn:hover {
+            background-color: var(--color-secondary);
+        }
+
+    </style>
+</head>
+<body>
+<header class="header">
+    <nav class="nav container">
+        <a href="#" class="logo">CIELO PUNKO</a>
+        <ul class="nav-list">
+            <li class="nav-item"><a href="#" class="nav-link">Inicio</a></li>
+            <li class="nav-item"><a href="#services" class="nav-link">Servicios</a></li>
+            <li class="nav-item"><a href="#features" class="nav-link">Características</a></li>
+            <li class="nav-item"><a href="#contact" class="nav-link">Contacto</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Explora la Amazonía con Seguridad y Confort</h1>
+            <p class="hero-subtitle">Viaja por la selva como nunca antes</p>
+            <a href="#services" class="btn">Descubre Nuestros Servicios</a>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title">Nuestros Servicios</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YW1hem9uJTIwcml2ZXJ8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60" alt="Gestión de Pasajeros" class="service-img">
+                    <div class="service-content">
+                        <h3 class="service-title">Gestión de Pasajeros</h3>
+                        <p class="service-description">Sistema eficiente para manejar la información de nuestros viajeros amazónicos.</p>
+                        <button class="btn" onclick="openModal('pasajerosModal')">Acceder</button>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <img src="https://peru21.pe/resizer/3CTxvorBq3qTBtLfnev9FhL1NqA=/980x0/smart/filters:format(jpeg):quality(75)/arc-anglerfish-arc2-prod-elcomercio.s3.amazonaws.com/public/54GGKDWM7VHNFPARUWRXTZMYAA.jpg" alt="Planificación de Rutas" class="service-img">
+                    <div class="service-content">
+                        <h3 class="service-title">Planificación de Rutas</h3>
+                        <p class="service-description">Diseño de rutas óptimas a través de la exuberante selva amazónica.</p>
+                        <button class="btn" onclick="openModal('rutasModal')">Acceder</button>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <img src="https://images.unsplash.com/photo-1506783323968-e8dad28ae1de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YW1hem9uJTIwcml2ZXJ8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60" alt="Gestión de Viajes" class="service-img">
+                    <div class="service-content">
+                        <h3 class="service-title">Gestión de Viajes</h3>
+                        <p class="service-description">Control integral de viajes por ríos y senderos de la Amazonía.</p>
+                        <button class="btn" onclick="openModal('viajesModal')">Acceder</button>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <img src="https://loscoches.com/wp-content/uploads/2020/01/camioneta-ford-2019.jpg" alt="Gestión de Viajes" class="service-img">
+                    <div class="service-content">
+                        <h3 class="service-title">Gestión de Vehiculos</h3>
+                        <p class="service-description">Control integral de vehiculis por </p>
+                        <button class="btn" onclick="openModal('vehiculosModal')">Acceder</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div id="pasajerosModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('pasajerosModal')">&times;</span>
+            <h2 class="modal-title">Gestión de Pasajeros</h2>
+            <a href="/new" class="modal-btn">Registrar Pasajero</a>
+            <a href="/listar" class="modal-btn">Listar Pasajeros</a>
+        </div>
+    </div>
+
+    <div id="rutasModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('rutasModal')">&times;</span>
+            <h2 class="modal-title">Planificación de Rutas</h2>
+            <a href="/rutas/new" class="modal-btn">Crear Ruta</a>
+            <a href="/rutas/listar" class="modal-btn">Listar Rutas</a>
+        </div>
+    </div>
+
+    <div id="viajesModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('viajesModal')">&times;</span>
+            <h2 class="modal-title">Gestión de Viajes</h2>
+            <a href="/viajes/nuevo" class="modal-btn">Programar Viaje</a>
+            <a href="/viajes/listar" class="modal-btn">Listar Viajes</a>
+        </div>
+    </div>
+    <div id="vehiculosModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('vehiculosModal')">&times;</span>
+            <h2 class="modal-title">Gestión de Vehiculos</h2>
+            <a href="/vehiculos/nuevo" class="modal-btn">Registrar Vehiculo</a>
+            <a href="/vehiculos" class="modal-btn">Listar Vehiculos</a>
+        </div>
+    </div>
+
+
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Características Únicas</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <i class="fas fa-leaf feature-icon"></i>
+                    <h3 class="feature-title">Eco-friendly</h3>
+                    <p>Transporte respetuoso con el medio ambiente amazónico</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-map-marked-alt feature-icon"></i>
+                    <h3 class="feature-title">Rutas Únicas</h3>
+                    <p>Descubre senderos y ríos inexplorados de la selva</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-users feature-icon"></i>
+                    <h3 class="feature-title">Guías Locales</h3>
+                    <p>Acompañamiento de expertos conocedores de la Amazonía</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-shield-alt feature-icon"></i>
+                    <h3 class="feature-title">Seguridad Garantizada</h3>
+                    <p>Protocolos de seguridad adaptados al entorno selvático</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Contáctanos</h2>
+            <form class="contact-form">
+                <div class="form-group">
+                    <label for="name" class="form-label">Nombre</label>
+                    <input type="text" id="name" name="name" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="form-label">Correo Electrónico</label>
+                    <input type="email" id="email" name="email" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="message" class="form-label">Mensaje</label>
+                    <textarea id="message" name="message" class="form-input" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="btn">Enviar Mensaje</button>
+            </form>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-logo">CIELO PUNKO</div>
+            <ul class="footer-links">
+                <li><a href="#" class="footer-link">Inicio</a></li>
+                <li><a href="#services" class="footer-link">Servicios</a></li>
+                <li><a href="#features" class="footer-link">Características</a></li>
+                <li><a href="#contact" class="footer-link">Contacto</a></li>
+            </ul>
+            <div class="social-icons">
+                <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+        <p>&copy; 2023 AmazoniaExpress. Todos los derechos reservados.</p>
+    </div>
+</footer>
+
+<script>
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    // Sticky header
+    window.addEventListener('scroll', () => {
+        const header = document.querySelector('.header');
+        if (window.scrollY > 100) {
+            header.classList.add('sticky');
+        } else {
+            header.classList.remove('sticky');
+        }
+    });
+
+    // Form submission (you'll need to implement the backend)
+    const form = document.querySelector('.contact-form');
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        // Here you would typically send the form data to your server
+        alert('¡Gracias por tu mensaje! Te contactaremos pronto.');
+        form.reset();
+    });
+    function openModal(modalId) {
+        document.getElementById(modalId).style.display = "block";
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = "none";
+    }
+
+    // Cerrar el modal si se hace clic fuera de él
+    window.onclick = function(event) {
+        if (event.target.className === 'modal') {
+            event.target.style.display = "none";
+        }
+    }
+</script>
+</body>
+</html>

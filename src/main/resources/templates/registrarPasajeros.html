@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Pasajero - Viajes Estelares</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #f39c12;
+            --background-color: #f4f7fa;
+            --text-color: #000000;
+            --card-bg-color: rgba(255, 255, 255, 0.9);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--text-color);
+            min-height: 100vh;
+
+
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .card {
+            background-color: var(--card-bg-color);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.5rem;
+            border-bottom: none;
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .form-control {
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            padding: 0.75rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(74, 144, 226, 0.25);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: #3a7bc8;
+            border-color: #3a7bc8;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #e67e22;
+            border-color: #e67e22;
+        }
+
+        .icon-input {
+            position: relative;
+        }
+
+        .icon-input i {
+            position: absolute;
+            top: 50%;
+            left: 1rem;
+            transform: translateY(-50%);
+            color: #aaa;
+        }
+
+        .icon-input input {
+            padding-left: 3rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        .form-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .card-body {
+                padding: 1.5rem;
+            }
+            .form-footer {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .btn {
+                width: 100%;
+            }
+        }
+        .navbar {
+            background: linear-gradient(90deg, #1a4f2d 0%, #38771b 100%);
+            padding: 0.5rem 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1000;
+        }
+
+        .navbar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('path/to/your/texture.png');
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .navbar-brand {
+            color: #ffffff !important;
+            font-weight: 700;
+            font-size: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            transition: 0.3s;
+        }
+
+        .navbar-brand:hover {
+            transform: scale(1.05);
+        }
+
+        .navbar-brand i {
+            font-size: 2rem;
+            margin-right: 0.5rem;
+        }
+
+        .nav-link {
+            color: #ffffff !important;
+            font-weight: 500;
+            transition: 0.3s;
+            position: relative;
+            padding: 0.5rem 1rem;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background-color: #ffffff;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover::before {
+            left: 0;
+        }
+
+        .nav-link i {
+            margin-right: 0.5rem;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover i {
+            transform: rotate(360deg);
+        }
+
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .dropdown-item {
+            padding: 0.5rem 1.5rem;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .dropdown-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 3px;
+            background-color: #24b4c4;
+            transform: scaleY(0);
+            transition: 0.3s;
+        }
+
+        .dropdown-item:hover::before {
+            transform: scaleY(1);
+        }
+
+        .dropdown-item:hover {
+            background-color: #f8f9fa;
+            padding-left: 2rem;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            color: #ffffff;
+            background: rgba(255,255,255,0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .user-profile:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-3px);
+        }
+
+        .admin-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            border: 2px solid rgba(255,255,255,0.2);
+            transition: 0.3s;
+        }
+
+        .user-profile:hover .admin-avatar {
+            transform: rotate(360deg);
+        }
+
+        @media (max-width: 992px) {
+            .navbar-nav {
+                margin-top: 1rem;
+            }
+
+            .user-profile {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+        }
+
+        .mega-menu-content {
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .mega-menu-content h4 {
+            color: #073041;
+            margin-bottom: 0.5rem;
+        }
+
+        .mega-menu-content ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .mega-menu-content ul li {
+            margin-bottom: 0.25rem;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #24b4c4;
+            color: #ffffff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+        .container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 100px;
+        }
+
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <i class="fas fa-bus-alt"></i>
+            <span>Panel de Control</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" th:href="@{/}">
+                        <i class="fas fa-home"></i>
+                        <span>INICIO</span>
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="passengerDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-users"></i>
+                        <span>Pasajeros</span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="passengerDropdown">
+                        <li><a class="dropdown-item" th:href="@{/new}"><i class="fas fa-plus-circle"></i> Registro</a></li>
+                        <li><a class="dropdown-item" th:href="@{/listar}"><i class="fas fa-list"></i> Listado</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="routesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-route"></i>
+                        <span>Rutas</span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="routesDropdown">
+                        <li><a class="dropdown-item" th:href="@{/rutas/new}"><i class="fas fa-plus-circle"></i> Registro</a></li>
+                        <li><a class="dropdown-item" th:href="@{/rutas/listar}"><i class="fas fa-list"></i> Listado</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="tripsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-bus"></i>
+                        <span>Viajes</span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="tripsDropdown">
+                        <li><a class="dropdown-item" th:href="@{/viajes/nuevo}"><i class="fas fa-plus-circle"></i> Registrar</a></li>
+                        <li><a class="dropdown-item" th:href="@{/viajes/listar}"><i class="fas fa-list"></i> Listar</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="carDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-car"></i>
+                        <span>Vehículos</span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="carDropdown">
+                        <li><a class="dropdown-item" th:href="@{/vehiculos/nuevo}"><i class="fas fa-plus-circle"></i> Registrar</a></li>
+                        <li><a class="dropdown-item" th:href="@{/vehiculos}"><i class="fas fa-list"></i> Listar</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="user-profile">
+                <img src="https://media-lim1-1.cdn.whatsapp.net/v/t61.24694-24/445116435_1913121035775230_5009887173409097431_n.jpg?ccb=11-4&oh=01_Q5AaIFwErS2-WAUcabDdq_mswj8cU08iXUFdcRacDL0aLL1L&oe=6694120D&_nc_sid=e6ed6c&_nc_cat=109" alt="Admin Avatar" class="admin-avatar">
+                <span>Administrador</span>
+            </div>
+        </div>
+    </div>
+</nav>
+    <!-- /#sidebar-wrapper -->
+
+
+
+        <div class="container animate-fade-in">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-user-plus me-2"></i>Registro de Pasajero
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/save}" th:object="${pasajeros}" method="post" class="needs-validation" novalidate>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="id" class="form-label">ID</label>
+                                    <div class="icon-input">
+                                        <i class="fas fa-id-card"></i>
+                                        <input th:field="*{id}" type="text" class="form-control" id="id" required>
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Por favor, ingrese un ID válido.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="dni" class="form-label">DNI</label>
+                                    <div class="icon-input">
+                                        <i class="fas fa-passport"></i>
+                                        <input th:field="*{dni}" type="text" class="form-control" id="dni" pattern="[0-9]+" title="Por favor ingrese solo números" required>
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Por favor, ingrese un DNI válido (solo números).
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="nombre" class="form-label">Nombres</label>
+                                    <div class="icon-input">
+                                        <i class="fas fa-user"></i>
+                                        <input th:field="*{nombre}" type="text" class="form-control" id="nombre" required>
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Por favor, ingrese su nombre.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="apellido" class="form-label">Apellidos</label>
+                                    <div class="icon-input">
+                                        <i class="fas fa-user"></i>
+                                        <input th:field="*{apellido}" type="text" class="form-control" id="apellido" required>
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Por favor, ingrese su apellido.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="edad" class="form-label">Edad</label>
+                                    <div class="icon-input">
+                                        <i class="fas fa-birthday-cake"></i>
+                                        <input th:field="*{edad}" type="text" class="form-control" id="edad" pattern="[0-9]+" title="Por favor ingrese solo números" required>
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Por favor, ingrese una edad válida (solo números).
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="telefono" class="form-label">Teléfono</label>
+                                    <div class="icon-input">
+                                        <i class="fas fa-phone"></i>
+                                        <input th:field="*{telefono}" type="text" class="form-control" id="telefono" pattern="[0-9]+" title="Por favor ingrese solo números" required>
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Por favor, ingrese un número de teléfono válido (solo números).
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-footer">
+                            <a th:href="@{/}" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Atrás
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i>Guardar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    <!-- /#content-wrapper -->
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+<script>
+    (function () {
+        'use strict'
+        var forms = document.querySelectorAll('.needs-validation')
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+    $(document).ready(function() {
+        // Función para manejar el clic en los elementos del menú
+        function handleMenuClick(event) {
+            // Evitar el comportamiento predeterminado del enlace si es un enlace principal
+            if ($(this).attr('href').startsWith('#')) {
+                event.preventDefault();
+            }
+
+            // Obtener el submenú correspondiente y alternar su visibilidad
+            var subMenu = $(this).next('.sub-menu');
+            subMenu.toggleClass('show');
+            subMenu.slideToggle(200);
+
+            // Ocultar otros submenús abiertos
+            $('.sub-menu').not(subMenu).removeClass('show').slideUp(200);
+        }
+
+        // Usar 'on' para delegar el evento de clic
+        $(document).on('click', '.list-group-item', handleMenuClick);
+
+        // Toggle del menú lateral
+        $("#menu-toggle").on('click', function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+            $(this).find('i').toggleClass('fa-times fa-bars');
+        });
+
+        // Asegurarse de que los submenús estén ocultos inicialmente
+        $('.sub-menu').hide();
+    });
+</script>
+</body>
+</html>
